@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_recipes"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/ly_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/basic_title_size"
+            android:textStyle="bold"
+            tools:text="Loading.." />
+
+        <ProgressBar
+            android:layout_width="@dimen/progress_bar_size"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/basic_margin" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ly_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/border_margin"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_activity_error_message"
+            android:textSize="@dimen/basic_title_size"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/bt_retry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/retry" />
+
+    </LinearLayout>
+
+</FrameLayout>

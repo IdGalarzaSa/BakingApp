@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">BakingApp</string>
+    <string name="recipe_image">recipe image</string>
+    <string name="retry">Retry</string>
+    <string name="main_activity_error_message">Ops! something happened, please check internet connection and try again</string>
+    <string name="servings_subTitle_text">Servings: </string>
+</resources>
