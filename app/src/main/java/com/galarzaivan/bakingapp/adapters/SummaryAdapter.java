@@ -48,7 +48,7 @@ public class SummaryAdapter extends RecyclerView.Adapter<SummaryAdapter.SummaryA
     @Override
     public void onBindViewHolder(@NonNull SummaryAdapterViewHolder holder, int position) {
         Step step = mSteps.get(position);
-        holder.loadSteps(step);
+        holder.loadStep(step);
     }
 
     @Override
@@ -56,7 +56,6 @@ public class SummaryAdapter extends RecyclerView.Adapter<SummaryAdapter.SummaryA
         if (mSteps == null) {
             return 0;
         }
-        // Add + 1 for the ingredient card
         return mSteps.size();
     }
 
@@ -71,7 +70,7 @@ public class SummaryAdapter extends RecyclerView.Adapter<SummaryAdapter.SummaryA
             itemView.setOnClickListener(this);
         }
 
-        private void loadSteps(Step step) {
+        private void loadStep(Step step) {
             mCardTitle.setText(step.getShortDescription());
         }
 

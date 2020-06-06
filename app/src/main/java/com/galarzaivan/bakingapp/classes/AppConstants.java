@@ -9,6 +9,7 @@ public class AppConstants {
 
 
     public final static String STEP_LIST = "step_list";
-
+    public final static String INGREDIENTS_LIST = "ingredients_list";
+    public final static String STEP_INFORMATION = "step_information";
 
 }

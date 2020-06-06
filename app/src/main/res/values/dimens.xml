@@ -8,4 +8,5 @@
     <dimen name="border_margin">16dp</dimen>
     <dimen name="basic_title_size">24sp</dimen>
     <dimen name="progress_bar_size">35dp</dimen>
+    <dimen name="width_0dp">0dp</dimen>
 </resources>
