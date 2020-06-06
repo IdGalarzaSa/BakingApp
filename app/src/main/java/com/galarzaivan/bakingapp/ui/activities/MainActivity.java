@@ -1,4 +1,4 @@
-package com.galarzaivan.bakingapp;
+package com.galarzaivan.bakingapp.ui.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.Network;
 import android.net.NetworkRequest;
@@ -15,7 +16,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.galarzaivan.bakingapp.R;
 import com.galarzaivan.bakingapp.adapters.RecipeAdapter;
+import com.galarzaivan.bakingapp.classes.AppConstants;
 import com.galarzaivan.bakingapp.classes.RetrofitController;
 import com.galarzaivan.bakingapp.models.Recipe;
 import com.galarzaivan.bakingapp.requests.BakingRequests;
@@ -29,7 +32,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecipeAdapter.RecipeAdapterOnClickHandler {
 
     private static final String TAG = "MainActivity";
     private static final String RECIPE_LIST = "recipe_list";
@@ -115,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 false);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setHasFixedSize(true);
-        mRecipeAdapter = new RecipeAdapter();
+        mRecipeAdapter = new RecipeAdapter(this);
         mRecyclerView.setAdapter(mRecipeAdapter);
     }
 
@@ -189,5 +192,13 @@ public class MainActivity extends AppCompatActivity {
 
         String dataMovie = new Gson().toJson(mRecipeList);
         outState.putString(RECIPE_LIST, dataMovie);
+    }
+
+    @Override
+    public void RecipeClickListener(Recipe recipe) {
+        String data = new Gson().toJson(recipe);
+        Intent newIntent = new Intent(mContext, RecipeActivity.class);
+        newIntent.putExtra(AppConstants.RECIPE, data);
+        startActivity(newIntent);
     }
 }

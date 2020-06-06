@@ -1,7 +1,6 @@
 package com.galarzaivan.bakingapp.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.galarzaivan.bakingapp.R;
 import com.galarzaivan.bakingapp.models.Recipe;
-import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -21,11 +19,23 @@ import java.util.List;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdapterViewHolder> {
     private static final String TAG = "RecipeAdapter";
 
-    List<Recipe> mRecipeList;
+    private List<Recipe> mRecipeList;
+
+    // Variable global que manejara la interface
+    private final RecipeAdapterOnClickHandler mClickHandler;
+
+    // Obtenemos el interface y lo almacenamos en una variable global
+    public RecipeAdapter(RecipeAdapterOnClickHandler mOnClickHandler) {
+        mClickHandler = mOnClickHandler;
+    }
 
     public void setRecipeList(List<Recipe> recipes) {
         mRecipeList = recipes;
         notifyDataSetChanged();
+    }
+
+    public interface RecipeAdapterOnClickHandler {
+        void RecipeClickListener(Recipe recipe);
     }
 
     @NonNull
@@ -41,7 +51,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
     @Override
     public void onBindViewHolder(@NonNull RecipeAdapterViewHolder holder, int position) {
         Recipe recipe = mRecipeList.get(position);
-        //Hacemos referencía al textView que esta declarado dentro del ViewHolder.
         holder.loadData(recipe);
     }
 
@@ -53,7 +62,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
         return mRecipeList.size();
     }
 
-    public class RecipeAdapterViewHolder extends RecyclerView.ViewHolder {
+    public class RecipeAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView mRecipeImage;
         private TextView mRecipeTitle;
@@ -64,6 +73,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
             mRecipeImage = (ImageView) itemView.findViewById(R.id.cv_recipe);
             mRecipeTitle = (TextView) itemView.findViewById(R.id.cv_title);
             mRecipeSubTitle = (TextView) itemView.findViewById(R.id.cv_subTitle);
+            itemView.setOnClickListener(this);
         }
 
         private void loadData(Recipe recipe) {
@@ -78,5 +88,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeAdap
             mRecipeSubTitle.setText(newSubTitle);
         }
 
+        @Override
+        public void onClick(View v) {
+            int adapterPosition = getAdapterPosition();
+            Recipe recipe = mRecipeList.get(adapterPosition);
+            mClickHandler.RecipeClickListener(recipe);
+        }
     }
 }
