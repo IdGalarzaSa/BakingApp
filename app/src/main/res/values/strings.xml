@@ -11,4 +11,6 @@
     <string name="ingredient_name">Name</string>
     <string name="ingredient_quantity">Quantity</string>
     <string name="ingredient_measure">Measure</string>
+    <string name="instructions">Instructions</string>
+    <string name="fragment_click_exception">\" must implement OnImageClickListener\"</string>
 </resources>

@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.galarzaivan.bakingapp.R;
 import com.galarzaivan.bakingapp.adapters.SummaryAdapter;
@@ -38,6 +37,23 @@ public class RecipeSummaryFragment extends Fragment implements SummaryAdapter.Su
     public RecipeSummaryFragment() {
         // Required empty public constructor
     }
+
+    private OnStepSelected mCallback;
+
+    public interface OnStepSelected {
+        void onStepSelected(Step step);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            mCallback = (OnStepSelected) context;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(context.toString() + getString(R.string.fragment_click_exception));
+        }
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -83,7 +99,7 @@ public class RecipeSummaryFragment extends Fragment implements SummaryAdapter.Su
 
     @Override
     public void SummaryClickListener(Step step) {
-        Toast.makeText(mContext, step.getShortDescription(), Toast.LENGTH_LONG).show();
+        mCallback.onStepSelected(step);
     }
 
     @Override

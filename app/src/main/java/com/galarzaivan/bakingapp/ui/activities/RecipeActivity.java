@@ -11,12 +11,13 @@ import android.view.View;
 import com.galarzaivan.bakingapp.R;
 import com.galarzaivan.bakingapp.classes.AppConstants;
 import com.galarzaivan.bakingapp.models.Recipe;
+import com.galarzaivan.bakingapp.models.Step;
 import com.galarzaivan.bakingapp.ui.fragments.RecipeInformationFragment;
 import com.galarzaivan.bakingapp.ui.fragments.RecipeIngredientsFragment;
 import com.galarzaivan.bakingapp.ui.fragments.RecipeSummaryFragment;
 import com.google.gson.Gson;
 
-public class RecipeActivity extends AppCompatActivity {
+public class RecipeActivity extends AppCompatActivity implements RecipeSummaryFragment.OnStepSelected{
 
     private Recipe mRecipe;
 
@@ -25,7 +26,7 @@ public class RecipeActivity extends AppCompatActivity {
     private FragmentManager mFragmentManager;
     private RecipeSummaryFragment mSummaryFragment;
     private RecipeIngredientsFragment mIngredientsFragment;
-    private RecipeInformationFragment recipeInformationFragment;
+    private RecipeInformationFragment mRecipeInformationFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,7 @@ public class RecipeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recipe_information);
 
         initViews();
+        showIngredientsCard(false);
 
         if (savedInstanceState == null) {
             getData();
@@ -62,6 +64,14 @@ public class RecipeActivity extends AppCompatActivity {
         mRecipe = new Gson().fromJson(data, Recipe.class);
     }
 
+    private void showIngredientsCard(boolean b) {
+        if (b) {
+            mIngredientsCard.setVisibility(View.VISIBLE);
+        } else {
+            mIngredientsCard.setVisibility(View.GONE);
+        }
+    }
+
     private void loadSummaryFragment() {
         mSummaryFragment = new RecipeSummaryFragment();
         Bundle bundle = new Bundle();
@@ -75,14 +85,6 @@ public class RecipeActivity extends AppCompatActivity {
         showIngredientsCard(true);
     }
 
-    private void showIngredientsCard(boolean b) {
-        if (b) {
-            mIngredientsCard.setVisibility(View.VISIBLE);
-        } else {
-            mIngredientsCard.setVisibility(View.GONE);
-        }
-    }
-
     private void loadIngredientsFragment() {
         mIngredientsFragment = new RecipeIngredientsFragment();
         Bundle bundle = new Bundle();
@@ -93,5 +95,28 @@ public class RecipeActivity extends AppCompatActivity {
                 .replace(R.id.fragment_container, mIngredientsFragment)
                 .commit();
         showIngredientsCard(false);
+    }
+
+    private void loadStepInstructions(Step step){
+        mRecipeInformationFragment = new RecipeInformationFragment();
+        Bundle bundle = new Bundle();
+        String data = new Gson().toJson(step);
+        bundle.putString(AppConstants.STEP_INFORMATION, data);
+        mRecipeInformationFragment.setArguments(bundle);
+        mFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, mRecipeInformationFragment)
+                .commit();
+        showIngredientsCard(false);
+    }
+
+    @Override
+    public void onStepSelected(Step step) {
+        loadStepInstructions(step);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        loadSummaryFragment();
     }
 }

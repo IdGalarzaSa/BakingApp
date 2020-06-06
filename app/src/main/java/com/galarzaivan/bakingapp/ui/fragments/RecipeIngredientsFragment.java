@@ -63,8 +63,6 @@ public class RecipeIngredientsFragment extends Fragment {
             }
         }
 
-        Log.e(TAG, "onCreateView: ---------->" + mIngredients.size());
-
         if (mIngredients != null && mIngredients.size() > 0) {
             mIngredientAdapter.setIngredientsList(mIngredients);
         } else {

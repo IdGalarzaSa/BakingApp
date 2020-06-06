@@ -1,66 +1,81 @@
 package com.galarzaivan.bakingapp.ui.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.galarzaivan.bakingapp.R;
+import com.galarzaivan.bakingapp.classes.AppConstants;
+import com.galarzaivan.bakingapp.models.Ingredient;
+import com.galarzaivan.bakingapp.models.Step;
+import com.google.gson.Gson;
 
+import java.util.Arrays;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RecipeInformationFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RecipeInformationFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static final String STEP = "step";
+
+    private Step mStep;
+    private Context mContext;
+    // Views
+    private TextView mStepInstructions;
 
     public RecipeInformationFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RecipeInformationFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RecipeInformationFragment newInstance(String param1, String param2) {
-        RecipeInformationFragment fragment = new RecipeInformationFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recipe_information, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_recipe_information, container, false);
+        mContext = rootView.getContext();
+        initViews(rootView);
+
+        if (savedInstanceState != null && savedInstanceState.containsKey(STEP)) {
+            String previousData = savedInstanceState.getString(STEP);
+            Log.e("prueba", "onCreateView------------->" + previousData);
+            mStep = new Gson().fromJson(previousData, Step.class);
+            loadMedia();
+            loadData();
+        } else {
+            Log.e("prueba", "NO------------->");
+            if (getArguments() != null && getArguments().containsKey(AppConstants.STEP_INFORMATION)) {
+                String data = getArguments().getString(AppConstants.STEP_INFORMATION);
+                mStep = new Gson().fromJson(data, Step.class);
+                loadMedia();
+                loadData();
+            }
+        }
+
+        return rootView;
+    }
+
+    private void initViews(View view) {
+        mStepInstructions = (TextView) view.findViewById(R.id.tv_step_instructions);
+    }
+
+    private void loadMedia() {
+
+    }
+
+    private void loadData() {
+        mStepInstructions.setText(mStep.getDescription());
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        String data = new Gson().toJson(mStep);
+        outState.putString(STEP, data);
     }
 }
