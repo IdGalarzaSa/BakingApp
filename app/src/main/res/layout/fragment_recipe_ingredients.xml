@@ -8,12 +8,13 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/basic_padding"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="@dimen/basic_padding">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="72dp"
             android:orientation="horizontal">
 
             <TextView
@@ -21,21 +22,21 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="6"
                 android:text="@string/ingredient_name"
-                android:textStyle="bold" />
+                android:textStyle="bold|italic" />
 
             <TextView
                 android:layout_width="@dimen/width_0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="@string/ingredient_quantity"
-                android:textStyle="bold" />
+                android:textStyle="bold|italic" />
 
             <TextView
                 android:layout_width="@dimen/width_0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:text="@string/ingredient_measure"
-                android:textStyle="bold" />
+                android:textStyle="bold|italic" />
 
         </LinearLayout>
 
@@ -43,14 +44,18 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_ingredients"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/basic_margin" />
 
         <Button
             android:id="@+id/save_ingredients"
-            android:text="@string/save_ingredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom" />
+            android:layout_gravity="bottom"
+            android:layout_margin="@dimen/basic_margin"
+            android:background="@color/colorPrimaryDark"
+            android:text="@string/save_ingredients"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 

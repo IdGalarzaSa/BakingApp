@@ -1,4 +1,4 @@
-package com.galarzaivan.bakingapp;
+package com.galarzaivan.bakingapp.ui.widget;
 
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -9,6 +9,7 @@ import android.widget.RemoteViews;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceManager;
 
+import com.galarzaivan.bakingapp.R;
 import com.galarzaivan.bakingapp.classes.AppConstants;
 import com.galarzaivan.bakingapp.models.Ingredient;
 import com.galarzaivan.bakingapp.models.Recipe;

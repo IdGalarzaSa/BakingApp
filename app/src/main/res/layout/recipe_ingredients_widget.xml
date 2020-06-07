@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#09C"
+    android:background="@drawable/widget_paper"
     android:orientation="vertical"
     android:padding="@dimen/widget_padding">
 
@@ -9,10 +9,9 @@
         android:id="@+id/appwidget_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#09C"
         android:gravity="center"
         android:text="@string/please_select_a_list_of_ingredients"
-        android:textColor="#ffffff"
+        android:textColor="#000000"
         android:textSize="24sp"
         android:textStyle="bold|italic" />
 
@@ -21,8 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textSize="14sp"
-        android:background="#09C"
-        android:textColor="#ffffff" />
+        android:textColor="#000000"
+        android:textSize="14sp" />
 
 </LinearLayout>

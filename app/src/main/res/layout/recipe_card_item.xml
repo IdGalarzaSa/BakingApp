@@ -24,25 +24,29 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:orientation="vertical"
-            android:padding="@dimen/basic_padding">
+            android:background="@drawable/wood"
+            android:padding="8dp">
 
             <TextView
                 android:id="@+id/cv_title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:textAppearance="?attr/textAppearanceHeadline6"
                 android:textSize="@dimen/card_title" />
 
             <TextView
                 android:id="@+id/cv_subTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:gravity="center"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/basic_margin"
                 android:text="@string/servings_subTitle_text"
                 android:textAppearance="?attr/textAppearanceBody2"
-                android:textColor="?android:attr/textColorSecondary"
+                android:textColor="@android:color/white"
                 android:textSize="@dimen/card_sub_title" />
         </LinearLayout>
     </LinearLayout>

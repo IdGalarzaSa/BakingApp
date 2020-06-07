@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/basic_margin"
+            android:layout_margin="@dimen/margin_16"
             android:gravity="center"
             android:text="@string/instructions"
             android:textSize="@dimen/basic_title_size"
@@ -28,7 +28,7 @@
             android:id="@+id/tv_step_instructions"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/basic_margin" />
+            android:layout_margin="@dimen/margin_16" />
 
     </LinearLayout>
 

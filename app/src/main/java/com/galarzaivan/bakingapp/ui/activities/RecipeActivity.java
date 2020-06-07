@@ -1,5 +1,6 @@
 package com.galarzaivan.bakingapp.ui.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
@@ -9,11 +10,13 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import com.galarzaivan.bakingapp.R;
-import com.galarzaivan.bakingapp.RecipeIngredientsWidget;
+import com.galarzaivan.bakingapp.ui.widget.RecipeIngredientsWidget;
 import com.galarzaivan.bakingapp.classes.AppConstants;
 import com.galarzaivan.bakingapp.models.Recipe;
 import com.galarzaivan.bakingapp.models.Step;
@@ -24,15 +27,20 @@ import com.google.gson.Gson;
 
 public class RecipeActivity extends AppCompatActivity implements RecipeSummaryFragment.OnStepSelected, RecipeIngredientsFragment.OnIngredientsSaved {
 
+    private static final String CURRENT_FRAGMENT = "current_fragment";
     private Recipe mRecipe;
 
     private CardView mIngredientsCard;
+
+    private String INGREDIENT_FRAGMENT = "ingredients_fragment";
+    private String INFORMATION_FRAGMENT = "information_fragment";
 
     private FragmentManager mFragmentManager;
     private RecipeSummaryFragment mSummaryFragment;
     private RecipeIngredientsFragment mIngredientsFragment;
     private RecipeInformationFragment mRecipeInformationFragment;
     private Context mContext;
+    private boolean isPortrait;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +48,19 @@ public class RecipeActivity extends AppCompatActivity implements RecipeSummaryFr
         setContentView(R.layout.activity_recipe_information);
         mContext = this;
         initViews();
-        showIngredientsCard(false);
+        isPortrait = isPortrait();
+        //showIngredientsCard(false);
 
         if (savedInstanceState == null) {
             getData();
-            loadSummaryFragment();
+        } else {
+            mRecipe = new Gson().fromJson(savedInstanceState.getString(AppConstants.RECIPE_INSTANCE), Recipe.class);
+        }
+
+        loadSummaryFragment();
+
+        if (!isPortrait) {
+            showIngredientsCard(true);
         }
     }
 
@@ -88,30 +104,50 @@ public class RecipeActivity extends AppCompatActivity implements RecipeSummaryFr
                 .replace(R.id.fragment_container, mSummaryFragment)
                 .commit();
 
-        showIngredientsCard(true);
+        if (isPortrait) {
+            showIngredientsCard(true);
+        }
     }
+
     private void loadIngredientsFragment() {
         mIngredientsFragment = new RecipeIngredientsFragment();
         Bundle bundle = new Bundle();
         String data = new Gson().toJson(mRecipe);
         bundle.putString(AppConstants.RECIPE, data);
         mIngredientsFragment.setArguments(bundle);
-        mFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, mIngredientsFragment)
-                .commit();
-        showIngredientsCard(false);
+
+        if (isPortrait) {
+            mFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, mIngredientsFragment)
+                    .commit();
+        } else {
+            mFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_second_container, mIngredientsFragment)
+                    .commit();
+        }
+        if (isPortrait) {
+            showIngredientsCard(false);
+        }
     }
 
-    private void loadStepInstructions(Step step){
+    private void loadStepInstructions(Step step) {
         mRecipeInformationFragment = new RecipeInformationFragment();
         Bundle bundle = new Bundle();
         String data = new Gson().toJson(step);
         bundle.putString(AppConstants.STEP_INFORMATION, data);
         mRecipeInformationFragment.setArguments(bundle);
-        mFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, mRecipeInformationFragment)
-                .commit();
-        showIngredientsCard(false);
+        if (isPortrait) {
+            mFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, mRecipeInformationFragment)
+                    .commit();
+        } else {
+            mFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_second_container, mRecipeInformationFragment)
+                    .commit();
+        }
+        if (isPortrait) {
+            showIngredientsCard(false);
+        }
     }
 
     @Override
@@ -129,16 +165,28 @@ public class RecipeActivity extends AppCompatActivity implements RecipeSummaryFr
         }
     }
 
-    private void updateWidget(){
+    private void updateWidget() {
         Intent intent = new Intent(this, RecipeIngredientsWidget.class);
         intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
         int ids[] = AppWidgetManager.getInstance(mContext).getAppWidgetIds(new ComponentName(mContext, RecipeIngredientsWidget.class));
-        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, ids);
         mContext.sendBroadcast(intent);
     }
 
     @Override
     public void onIngredientsSaved() {
         updateWidget();
+    }
+
+    private boolean isPortrait() {
+        int orientation = this.getResources().getConfiguration().orientation;
+        return orientation == Configuration.ORIENTATION_PORTRAIT;
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        String data = new Gson().toJson(mRecipe);
+        outState.putString(AppConstants.RECIPE_INSTANCE, data);
     }
 }

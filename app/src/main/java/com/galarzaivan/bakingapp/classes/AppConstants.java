@@ -6,11 +6,9 @@ public class AppConstants {
     public final static String BAKING_DATA = "59121517_baking/baking.json";
 
     public final static String RECIPE = "recipe";
-
+    public final static String RECIPE_INSTANCE= "recipe:instance";
+    public static final String RECIPE_WIDGET = "recipe_widget";
 
     public final static String STEP_LIST = "step_list";
-    public final static String INGREDIENTS_LIST = "ingredients_list";
     public final static String STEP_INFORMATION = "step_information";
-
-    public static final String RECIPE_WIDGET = "recipe_widget";
 }

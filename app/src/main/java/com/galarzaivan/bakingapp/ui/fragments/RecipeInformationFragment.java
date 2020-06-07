@@ -142,13 +142,16 @@ public class RecipeInformationFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        hideSystemUi();
+        //hideSystemUi();
         if ((Util.SDK_INT < 24 || player == null) && mURL != null) {
             initializePlayer();
         }
     }
 
-    @SuppressLint("InlinedApi")
+
+    /*
+
+        @SuppressLint("InlinedApi")
     private void hideSystemUi() {
         playerView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LOW_PROFILE
                 | View.SYSTEM_UI_FLAG_FULLSCREEN
@@ -157,6 +160,7 @@ public class RecipeInformationFragment extends Fragment {
                 | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
     }
+     */
 
     @Override
     public void onPause() {

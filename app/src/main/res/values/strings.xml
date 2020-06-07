@@ -12,7 +12,7 @@
     <string name="instructions">Instructions</string>
     <string name="fragment_click_exception">\" must implement OnImageClickListener\"</string>
     <string name="baking_app_name">Baking App</string>
-    <string name="save_ingredients">save_ingredients</string>
+    <string name="save_ingredients">save ingredients</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
     <string name="please_select_a_list_of_ingredients">Please select a list of ingredients</string>

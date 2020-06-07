@@ -1,9 +1,6 @@
 package com.galarzaivan.bakingapp.ui.fragments;
 
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -13,18 +10,17 @@ import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.galarzaivan.bakingapp.R;
-import com.galarzaivan.bakingapp.RecipeIngredientsWidget;
 import com.galarzaivan.bakingapp.adapters.IngredientAdapter;
 import com.galarzaivan.bakingapp.classes.AppConstants;
 import com.galarzaivan.bakingapp.models.Ingredient;
 import com.galarzaivan.bakingapp.models.Recipe;
-import com.galarzaivan.bakingapp.models.Step;
 import com.google.gson.Gson;
 
 import java.util.List;
