@@ -27,6 +27,7 @@
             tools:text="Loading.." />
 
         <ProgressBar
+            android:id="@+id/pb_main"
             android:layout_width="@dimen/progress_bar_size"
             android:layout_height="35dp"
             android:layout_gravity="center"
