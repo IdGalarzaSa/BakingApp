@@ -13,4 +13,5 @@
     <string name="ingredient_measure">Measure</string>
     <string name="instructions">Instructions</string>
     <string name="fragment_click_exception">\" must implement OnImageClickListener\"</string>
+    <string name="baking_app_name">Baking App</string>
 </resources>
