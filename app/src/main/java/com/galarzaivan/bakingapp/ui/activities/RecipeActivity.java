@@ -2,6 +2,7 @@ package com.galarzaivan.bakingapp.ui.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 import android.content.Intent;
@@ -84,12 +85,11 @@ public class RecipeActivity extends AppCompatActivity implements RecipeSummaryFr
 
         showIngredientsCard(true);
     }
-
     private void loadIngredientsFragment() {
         mIngredientsFragment = new RecipeIngredientsFragment();
         Bundle bundle = new Bundle();
-        String data = new Gson().toJson(mRecipe.getIngredients());
-        bundle.putString(AppConstants.INGREDIENTS_LIST, data);
+        String data = new Gson().toJson(mRecipe);
+        bundle.putString(AppConstants.RECIPE, data);
         mIngredientsFragment.setArguments(bundle);
         mFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, mIngredientsFragment)
@@ -116,7 +116,11 @@ public class RecipeActivity extends AppCompatActivity implements RecipeSummaryFr
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        loadSummaryFragment();
+        Fragment f = mFragmentManager.findFragmentById(R.id.fragment_container);
+        if (f instanceof RecipeIngredientsFragment || f instanceof RecipeInformationFragment)
+            loadSummaryFragment();
+        else {
+            super.onBackPressed();
+        }
     }
 }

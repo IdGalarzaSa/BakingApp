@@ -4,8 +4,6 @@
     <string name="retry">Retry</string>
     <string name="main_activity_error_message">Ops! something happened, please check internet connection and try again</string>
     <string name="servings_subTitle_text">Servings: </string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ingredients">Ingredients</string>
     <string name="ingredient_name">Name</string>
@@ -14,4 +12,7 @@
     <string name="instructions">Instructions</string>
     <string name="fragment_click_exception">\" must implement OnImageClickListener\"</string>
     <string name="baking_app_name">Baking App</string>
+    <string name="save_ingredients">save_ingredients</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>
