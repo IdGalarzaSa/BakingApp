@@ -5,11 +5,15 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.appwidget.AppWidgetManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.galarzaivan.bakingapp.R;
+import com.galarzaivan.bakingapp.RecipeIngredientsWidget;
 import com.galarzaivan.bakingapp.classes.AppConstants;
 import com.galarzaivan.bakingapp.models.Recipe;
 import com.galarzaivan.bakingapp.models.Step;
@@ -18,7 +22,7 @@ import com.galarzaivan.bakingapp.ui.fragments.RecipeIngredientsFragment;
 import com.galarzaivan.bakingapp.ui.fragments.RecipeSummaryFragment;
 import com.google.gson.Gson;
 
-public class RecipeActivity extends AppCompatActivity implements RecipeSummaryFragment.OnStepSelected{
+public class RecipeActivity extends AppCompatActivity implements RecipeSummaryFragment.OnStepSelected, RecipeIngredientsFragment.OnIngredientsSaved {
 
     private Recipe mRecipe;
 
@@ -28,12 +32,13 @@ public class RecipeActivity extends AppCompatActivity implements RecipeSummaryFr
     private RecipeSummaryFragment mSummaryFragment;
     private RecipeIngredientsFragment mIngredientsFragment;
     private RecipeInformationFragment mRecipeInformationFragment;
+    private Context mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_information);
-
+        mContext = this;
         initViews();
         showIngredientsCard(false);
 
@@ -122,5 +127,18 @@ public class RecipeActivity extends AppCompatActivity implements RecipeSummaryFr
         else {
             super.onBackPressed();
         }
+    }
+
+    private void updateWidget(){
+        Intent intent = new Intent(this, RecipeIngredientsWidget.class);
+        intent.setAction("android.appwidget.action.APPWIDGET_UPDATE");
+        int ids[] = AppWidgetManager.getInstance(mContext).getAppWidgetIds(new ComponentName(mContext, RecipeIngredientsWidget.class));
+        intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+        mContext.sendBroadcast(intent);
+    }
+
+    @Override
+    public void onIngredientsSaved() {
+        updateWidget();
     }
 }
